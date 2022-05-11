@@ -1,0 +1,14 @@
+Package: DNNCausal
+Type: Package
+Title: Estimating Causal effects using Deep learning
+Version: 0.1.0
+Author: c(
+	person("Mohammad", "Ghasempour", role = "aut", email = "mohammad.ghasempour@umu.se"),
+	person("Xavier", "de Luna", role = "aut", email = "xavier.de.luna@umu.se"))
+Maintainer: Mohammad Ghasempour <mohammad.ghasempour@umu.se>
+Description: Provides AIPW estimations for both ATE and ATT, by using Deep learning for fitting nuisance models. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Imports: abind, keras
