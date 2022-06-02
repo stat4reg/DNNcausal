@@ -560,6 +560,7 @@ cat('trainin will be start \n')
   t_train <- keras::to_categorical(T,2)
 
 
+
   if (is.null(fit_propensity_score)) {
     keras::fit(ps_model,
                x_train, t_train ,
