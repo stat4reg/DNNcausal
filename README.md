@@ -8,7 +8,7 @@ Tensorflow and Keras are used to implement the neural network models.
 
 # References
 
-Ghasempour, M., Moosavi, N. and de Luna, X. (2021). Convolutional neural networks for valid and efficient causal inference. ArXiv version soon available
+Ghasempour, M., Moosavi, N. and de Luna, X. (2022). Convolutional neural networks for valid and efficient causal inference. ArXiv version soon available
 
 # Installing
 
