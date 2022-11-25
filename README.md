@@ -17,5 +17,5 @@ To install and load this package in R from GitHub, run the following commands:
 install.packages("devtools")
 library(devtools) 
 install_github("stat4reg/DNNcausal")
-library(SDRcausal)
+library(DNNcausal)
 ```
