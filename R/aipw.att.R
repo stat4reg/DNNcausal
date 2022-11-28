@@ -167,7 +167,7 @@ aipw.att = function(Y,T,X_t,X = NULL,rescale_treated=TRUE,rescale_outcome=TRUE,m
     if(n == nrow(state)) X =as.matrix(cbind(X,state))
   }
 
-cat('inputes are defined \n')
+cat('inputs are defined \n')
 
   #
   # if (is.list(X)){
