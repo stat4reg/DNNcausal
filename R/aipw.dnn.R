@@ -28,7 +28,7 @@
 #'
 #' @examples
 #'
-#' library(DNNCausal)
+#' library(DNNcausal)
 #' # simulate covariates, treatment assignment mechanism, and potential outcomes.
 #' x = matrix(rnorm(100 * 5), nrow = 100)
 #' p = 1/ (1 + exp(0.1*( (x[,5] - x[,1])^2 + (x[,4] - x[,2])^2 - x[,3]^2)))

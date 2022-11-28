@@ -1,4 +1,4 @@
-Package: DNNCausal
+Package: DNNcausal
 Type: Package
 Title: Estimating Causal effects using Deep learning
 Version: 0.1.0

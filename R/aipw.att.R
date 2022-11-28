@@ -29,7 +29,7 @@
 #'
 #' @examples
 #'
-#' library(DNNCausal)
+#' library(DNNcausal)
 #' # simulate covariates, treatment assignment mechanism, and potential outcomes.
 #' x = matrix(rnorm(100 * 5), nrow = 100)
 #' p = 1/ (1 + exp(0.1*( (x[,5] - x[,1])^2 + (x[,4] - x[,2])^2 - x[,3]^2)))
@@ -167,7 +167,7 @@ aipw.att = function(Y,T,X_t,X = NULL,rescale_treated=TRUE,rescale_outcome=TRUE,m
     if(n == nrow(state)) X =as.matrix(cbind(X,state))
   }
 
-cat('Inputs are defined \n')
+cat('inputes are defined \n')
 
   #
   # if (is.list(X)){
@@ -313,7 +313,7 @@ cat('Inputs are defined \n')
     model_m = keras::keras_model(list(model_m$input,model_mx$input),m_m)
     model_p = keras::keras_model(list(model_p$input,model_px$input),m_p)
   }
-cat('Model is defined \n')
+cat('model is defined \n')
   if (is.null(optimizer)) {
     optimizer_m = keras::optimizer_adam(lr = 0.003)
     optimizer_p = keras::optimizer_adam(lr = 0.003)
@@ -417,7 +417,7 @@ cat('Model is defined \n')
     verbose_m = as.numeric(verbose_m)
   }
   #### outcome models
-cat('Training starts \n')
+cat('trainin will be start \n')
   if(!is.null(X) &(ncol(X)!=0 && use_scalers)){outcome_model = model_m}else{
     outcome_model = keras::layer_dense(object = model_m,units = 1)}
 
@@ -592,7 +592,7 @@ cat('Training starts \n')
   }
 
   if(!is.null(X) &(ncol(X)!=0  && use_scalers)){predictions_ps <- keras::predict_on_batch(ps_model,x_train)}else{
-    predictions_ps <- tryCatch({ keras::predict(ps_model,x_train)}, error = function(cond){return(keras::predict_proba(ps_model,x_train))})
+    predictions_ps <- keras::predict_proba(ps_model,x_train)
   }
   p_one = predictions_ps[,2]
   }else{
