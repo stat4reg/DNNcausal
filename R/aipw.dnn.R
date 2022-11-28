@@ -449,10 +449,11 @@ aipw.dnn = function(Y,T,X_t,X = NULL,rescale_outcome=TRUE,model=NULL,optimizer=N
     if(ncol(X)!=0){
       predictions_ps <- keras::predict_on_batch(ps_model,x_train)
       }else{
-    predictions_ps <- keras::predict_proba(ps_model,x_train)
+
+    predictions_ps <- tryCatch({ keras::predict(ps_model,x_train)}, error = function(cond){return(keras::predict_proba(ps_model,x_train))})
       }
   }else{
-    predictions_ps <- keras::predict_proba(ps_model,x_train)
+    predictions_ps <- tryCatch({ keras::predict(ps_model,x_train)}, error = function(cond){return(keras::predict_proba(ps_model,x_train))})
   }
 
 

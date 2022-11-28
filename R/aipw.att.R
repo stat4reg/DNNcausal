@@ -167,7 +167,7 @@ aipw.att = function(Y,T,X_t,X = NULL,rescale_treated=TRUE,rescale_outcome=TRUE,m
     if(n == nrow(state)) X =as.matrix(cbind(X,state))
   }
 
-cat('inputes are defined \n')
+cat('Inputs are defined \n')
 
   #
   # if (is.list(X)){
@@ -313,7 +313,7 @@ cat('inputes are defined \n')
     model_m = keras::keras_model(list(model_m$input,model_mx$input),m_m)
     model_p = keras::keras_model(list(model_p$input,model_px$input),m_p)
   }
-cat('model is defined \n')
+cat('Model is defined \n')
   if (is.null(optimizer)) {
     optimizer_m = keras::optimizer_adam(lr = 0.003)
     optimizer_p = keras::optimizer_adam(lr = 0.003)
@@ -417,7 +417,7 @@ cat('model is defined \n')
     verbose_m = as.numeric(verbose_m)
   }
   #### outcome models
-cat('trainin will be start \n')
+cat('Training starts \n')
   if(!is.null(X) &(ncol(X)!=0 && use_scalers)){outcome_model = model_m}else{
     outcome_model = keras::layer_dense(object = model_m,units = 1)}
 
@@ -592,7 +592,7 @@ cat('trainin will be start \n')
   }
 
   if(!is.null(X) &(ncol(X)!=0  && use_scalers)){predictions_ps <- keras::predict_on_batch(ps_model,x_train)}else{
-    predictions_ps <- keras::predict_proba(ps_model,x_train)
+    predictions_ps <- tryCatch({ keras::predict(ps_model,x_train)}, error = function(cond){return(keras::predict_proba(ps_model,x_train))})
   }
   p_one = predictions_ps[,2]
   }else{
