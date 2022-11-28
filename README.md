@@ -5,6 +5,8 @@ A particular use of the package is to use one-dimensional convolutional neural n
 (first introduced in Convolutional neural networks for valid and efficient causal inference).
 Tensorflow and Keras are used to implement the neural network models.
 
+Examples of use can be found at github.com/stat4reg/Causal_CNN
+
 
 # References
 
