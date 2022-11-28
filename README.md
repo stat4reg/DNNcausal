@@ -21,7 +21,7 @@ library(DNNCausal)
 keras::install_keras()
 ```
 
-For Mac users might have to run the following command in terminal:
+Mac users might have to run the following command in terminal:
 
 ```
 $ xcode-select --install
