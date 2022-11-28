@@ -16,6 +16,13 @@ To install and load this package in R from GitHub, run the following commands:
 ```
 install.packages("devtools")
 library(devtools) 
-install_github("stat4reg/DNNcausal")
-library(DNNcausal)
+install_github("stat4reg/DNNCausal")
+library(DNNCausal)
+keras::install_keras()
+```
+
+For Mac users might have to run the following command in terminal:
+
+```
+$ xcode-select --install
 ```
