@@ -10,5 +10,5 @@ Description: Provides AIPW estimations for both ATE and ATT, by using Deep learn
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.2
 Imports: abind, keras
