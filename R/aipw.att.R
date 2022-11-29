@@ -592,8 +592,7 @@ cat('training starts \n')
   }
 
   if(!is.null(X) &(ncol(X)!=0  && use_scalers)){predictions_ps <- keras::predict_on_batch(ps_model,x_train)}else{
-    predictions_ps <- tryCatch({ keras::predict(ps_model,x_train)}, error = function(cond){
-      cat(cond)
+    predictions_ps <- tryCatch({ predict(ps_model,x_train)}, error = function(cond){
       return(keras::predict_proba(ps_model,x_train))})
   }
   p_one = predictions_ps[,2]
