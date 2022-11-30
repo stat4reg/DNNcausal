@@ -477,17 +477,18 @@ aipw.dnn = function(Y,T,X_t,X = NULL,rescale_outcome=TRUE,model=NULL,optimizer=N
 
   sigma_hat = mean((phi_hat_one - phi_hat_zero)**2)- tau_hat_sec**2
   lower_95_bound = tau_hat_sec - stats::qnorm(.975) * sqrt(sigma_hat/ length(Y))
-  higher_95_bound = tau_hat_sec + stats::qnorm(.975) * sqrt(sigma_hat/ length(Y))
+  upper_95_bound = tau_hat_sec + stats::qnorm(.975) * sqrt(sigma_hat/ length(Y))
 
   p = sum(T)/length(T)
   psi_11 = Y * T/p
-  psi_01 = p_one*(1 - T)*(Y - miu_hat_zero)/((1 - p_one)* p) + T * miu_hat_zero/p
+  psi_01 = p_one*(1 - T)*(Y - miu_hat_zero)/((1 - p_one)* p) + T * (miu_hat_zero - mean(miu_hat_zero))/p
   att = mean(psi_11 - psi_01)
   sigma_att_hat = mean((psi_11 - psi_01)**2)- att**2
+  att = att - mean(miu_hat_zero)
   lower_95_bound_att = att - stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
-  higher_95_bound_att = att + stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
+  upper_95_bound_att = att + stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
 
-  res = list('tau_hat'=tau_hat_sec,'lower_bound'=lower_95_bound,'higher_bound'=higher_95_bound, 'primitive_tau_hat'=mean(tau_hat), 'ATT'=att, 'lower_bound_att'=lower_95_bound_att, 'higher_bound_att'=higher_95_bound_att)
+  res = list('EIF_ATE'=tau_hat_sec,'lower_bound'=lower_95_bound,'upper_bound'=upper_95_bound, 'Plugin_ATE'=mean(tau_hat), 'EIF_ATT'=att, 'lower_bound_att'=lower_95_bound_att, 'upper_bound_att'=upper_95_bound_att , 'Standard_error_ATT'= sqrt(sigma_att_hat/ length(Y)),  'Standard_error_ATE'=  sqrt(sigma_hat/ length(Y)))
   if(debugging){
     res=c(res, 'p_hat'=as.data.frame(p_one))
     res=c(res, 'm0_hat'=as.data.frame(miu_hat_zero))

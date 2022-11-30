@@ -607,13 +607,14 @@ cat('training starts \n')
 
   p = sum(T)/length(T)
   psi_11 = Y * T/p
-  psi_01 = p_one*(1 - T)*(Y - miu_hat_zero)/((1 - p_one)* p) + T * miu_hat_zero/p  #
+  psi_01 = p_one*(1 - T)*(Y - miu_hat_zero)/((1 - p_one)* p) + T * (miu_hat_zero - mean(miu_hat_zero))/p  #
   att = mean(psi_11 - psi_01)
   sigma_att_hat = mean((psi_11 - psi_01)**2)- att**2
+  att = att - mean(miu_hat_zero)
   lower_95_bound_att = att - stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
-  higher_95_bound_att = att + stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
+  upper_95_bound_att = att + stats::qnorm(.975) * sqrt(sigma_att_hat/ length(Y))
 
-  res = list( 'ATT'=att, 'lower_bound_att'=lower_95_bound_att, 'higher_bound_att'=higher_95_bound_att)
+  res = list( 'EIF_ATT'=att, 'lower_bound_att'=lower_95_bound_att, 'upper_bound_att'=upper_95_bound_att, 'Standard_error'= sqrt(sigma_att_hat/ length(Y)) )
 
   if(debugging){
     res=c(res, 'p_hat'=as.data.frame(p_one))
