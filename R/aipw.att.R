@@ -1,31 +1,33 @@
-#' Deep Neural Network AIPW Estimator for ATT
+#' Deep Neural Network Augmented Inverse Probability Weighting (AIPW) Estimator for Average treatment effects on the treated (ATT)
 #'
-#' @param	Y is a numerical vector of observed outcomes of length \code{n}.
-#' @param T is a logical vector of treatment statuses of length \code{n}.
-#' @param X_t is the set of covariates. If covariates are time series, it should be a list of \code{k} different \code{n * p} matrixes. Here \code{p} is the length of the time series, and \code{k} is the number of different covariates. If covariates are single valued, it should be a matrix of size \code{n * k}.
-#' @param X if there are some single value covariates besides the time series, it can be considered here. It has to be \code{k’ * n} matrix. The default value is \code{Null}.
-#' @param rescale_outcome determine if scaling the outcome values to have zero mean and one standard deviation. Default is \code{True}.
-#' @param do_standardize determine if standardize the time series row-wise or column-wise or not at all. Options are ‘column’ and ‘row’.  Default is \code{Null}.
-#' @param use_scalers in the case that covariates are times series determine if to use the mean and sd of times series after the standardization and other single value covariates in an additional parallel neural network or not. Default is \code{True}.
-#' @param rescale_treated In the case that scalers are used, determine if the scaling makes all covariates zero mean or just treated once.
-#' @param model It can be defined by a vector of size 3 (for ate function) or size 2 (for att function), or it can be just one model. In the latter case, that one model will be used for all nuisance models. The default value for Model is \code{Null}, and in this case, the functions will use a specific predefined network.  Each model should be defined using the package Keras.
-#' @param optimizer can be a vector contain two optimizers or can be just one. In the presence of two optimizers, the first one will be used for the outcome models, and the second one will be used for the propensity score estimation. The default is \code{Null}, and in this case, adam optimizer is used.
-#' @param loss can be a vector contain two loss functions or can be just one. In the presence of two functions, the first one will be used for the outcome models, and the second one will be used for the propensity score estimation. The default is \code{Null}, and in this case, mean square error and cross-entropy error are used for the outcome models and propensity score, respectively.
-#' @param epochs default value is 256. A vector is also acceptable.
-#' @param batch_size default value is 200. A vector is also acceptable.
-#' @param propensity_score can be used to determine a pre-estimated propensity score. By using it, the functions will not make the neural network for estimating the propensity score, and the predefined values will be used in the final estimation.
-#' @param debugging is a logical variable, and if it is \code{True}, the function will return the estimated vectors for the outcome models and the propensity score.
-#' @param verbose can be a vector of logical variables or just one. That will control the verbosity of the fitting process.
-#' @param compile_outcome_model a list of parameters and their values can be used to add to Keras compile function when it is used for the outcome models. the list can be used to overwrite existing parameters, so it would be considered as a way to run Keras in a completely arbitrary way.
-#' @param compile_propensity_score a list of parameters and their values can be used to add to Keras compile function when it is used for the propensity score. the list can be used to overwrite existing parameters, so it would be considered as a way to run Keras in a completely arbitrary way.
-#' @param fit_outcome_model a list of parameters and their values can be used to add to Keras fit function when it is used for the outcome models. the list can be used to overwrite existing parameters.
-#' @param fit_propensity_score a list of parameters and their values can be used to add to Keras fit function when it is used for the propensity score. the list can be used to overwrite existing parameters.
-#' @param truncate_ps determines whether a truncation over the estimation of propensity scores should be considered or not.
+#' @param	Y numerical vector of observed outcomes of length \code{n}.
+#' @param T logical vector of treatment statuses of length \code{n}.
+#' @param X_t set of covariates. If covariates are time series, it should be a list of \code{k} different \code{n * p} matrixes. Here \code{p} is the length of the time series, and \code{k} is the number of different covariates. If covariates are single valued, it should be a matrix of size \code{n * k}.
+#' @param X single-valued covariates are possible to be included besides the time series. It is supposed to be a \code{k’ * n} dimensional matrix. The default value is \code{NULL}.
+#' @param rescale_outcome logical; if \code{TRUE}, the outcome values are standardized to have zero mean and one standard deviation. The default is \code{TRUE}.
+#' @param do_standardize a character string determining the orientation of standardizing the covariates. This must be \code{"row"} for row-wise or \code{"column"} for column-wise standardizing. The default \code{NULL} is equivalent to using the original covariates.
+#' @param use_scalers logical; determines whether to use single valued covariates in an additional parallel neural network or not. The default is \code{TRUE}.
+#' @param rescale_treated logical; in the presence of scaler covariates, to standardize them, it determines whether only treated ones are considered for the scaling or all. The default is \code{TRUE}.
+#' @param model the nuisance models. A vector of size 2 can be used to assign it, or a single model can be used. In the latter case, that one model will be used for all nuisance models. The default value is \code{NULL}, and in this case, the functions will use a specific predefined network.  Each model should be defined using the package Keras.
+#' @param optimizer the optimization algorithms that are used for fitting the nuisance models. It can be assigned by a vector containing two optimizers or can be just one optimizer. If there are two optimizers, the first one will be used for the outcome models, and the second one will be used for the propensity score estimation. The default is \code{NULL}, and in this case, adam optimizer is used.
+#' @param loss the loss functions for defining the fitting problem of nuisance models. Acceptable options are a vector containing two loss functions or just a single loss function. In the presence of two functions, the first one will be used for the outcome models, and the second one will be used for the propensity score estimation. The default is \code{NULL}, and in this case, mean square error and cross-entropy error are used for the outcome models and propensity score, respectively.
+#' @param epochs numeric vector of the number of epochs in fitting processes. It is also acceptable to use a single number for all problems. The default value is 256.
+#' @param batch_size numeric vector of the batch sizes in fitting processes. A single value is also acceptable. The default value is 200.
+#' @param propensity_score numerical vector of treatment probability of length \code{n}. It is optional to use it to consider a pre-estimated propensity score. If it is assigned, this function will not make the neural network model for estimating the propensity score, and the predefined values will be used in the final estimation. The default value is \code{NULL}, and it means a model will be fitted for the propensity score.
+#' @param debugging logical; if \code{TRUE}, the function will return the vectors of estimations for the outcome models and the propensity score. The default is \code{FALSE}.
+#' @param verbose vector of logical variables or just one. It can be used to control the verbosity of the fitting process. The default is \code{FALSE}.
+#' @param compile_outcome_model list of parameters and their values can be used to add to the Keras compile function when it is used for the outcome models. The list can be used to overwrite existing parameters, so it would be a way to compile the Keras model in a completely arbitrary way. The default is \code{NULL}.
+#' @param compile_propensity_score list of parameters and their values can be used to add to the Keras compile function when it is used for the propensity score. The list can be used to overwrite existing parameters, so it would be a way to compile the Keras model in a completely arbitrary way. The default is \code{NULL}.
+#' @param fit_outcome_model list of parameters and their values can be used to add to the Keras fit function when it is used for the outcome models. The list can be used to overwrite existing parameters. The default is \code{NULL}.
+#' @param fit_propensity_score list of parameters and their values can be used to add to the Keras fit function when it is used for the propensity score. The list can be used to overwrite existing parameters. The default is \code{NULL}.
+#' @param truncate_ps logical; it determines whether a truncation over the estimation of propensity scores should be considered or not. The default is \code{TRUE}.
 #'
-#' @return ATT AIPW Estimate and Inference of ATE
+#' @return DNN-AIPW Estimate and Inference of ATT
 #' @export
 #'
+#'
 #' @import keras abind
+#' @importFrom stats predict
 #'
 #' @examples
 #'
