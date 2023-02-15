@@ -2,18 +2,21 @@
 % Please edit documentation in R/causal.loss.R
 \name{causal.loss}
 \alias{causal.loss}
-\title{loss function that is used in outcome model estimations}
+\title{loss function that is used in outcome model estimation}
 \usage{
 causal.loss(y_true, y_pred)
 }
 \arguments{
-\item{y_true}{real labels}
+\item{y_true}{two-column matrix of observed outcomes and exposure status}
 
-\item{y_pred}{predicted labels}
+\item{y_pred}{two-column matrix of predicted values for \eqn{\hat{\mu}_0} and \eqn{\hat{\tau}}}
 }
 \value{
-loss function of \eqn{\hat{\mu}_0} and \eqn{\hat{\tau}}
+loss value for predicted \eqn{\hat{\mu}_0} and \eqn{\hat{\tau}}, considering the loss function introduced in the reference.
 }
 \description{
-loss function that is used in outcome model estimations
+loss function that is used in outcome model estimation
+}
+\references{
+Max H. Farrell and Tengyuan Liang and Sanjog Misra (2021) \emph{Deep Neural Networks for Estimation and Inference}. The Econometric Society.
 }
