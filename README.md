@@ -1,7 +1,7 @@
 # DNNcausal 
-The R-package DNNcausal performs estimations of average causal effect and average treatment causal on the treated,
-with AIPW by fitting deep neural networks to estimate nuisance models.
-A particular use of the package is to use one-dimensional convolutional neural networks for time-series data inputs
+The R-package DNNcausal implements estimators of average causal effect and average causal effect on the treated,
+combining AIPW with deep neural networks firts of nuisance functions.
+A possible use of the package is to use one-dimensional convolutional neural networks for time-series data inputs
 (first introduced in Ghasempour et al, 2023).
 Tensorflow and Keras are used to implement the neural network models.
 
