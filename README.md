@@ -10,8 +10,9 @@ Examples of use can be found at [Causal_CNN](https://github.com/stat4reg/Causal_
 
 # References
 
-Ghasempour, M., Moosavi, N. and de Luna, X. (2023). Convolutional neural networks for valid and efficient causal inference. On arXiv: https://doi.org/10.48550/arXiv.2301.11732
 
+Ghasempour, M, Moosavi, N, de Luna, X. (2023). Convolutional neural networks for valid and efficient causal inference. \textit{Journal of Computational and Graphical Statistics}. Open access: DOI: 10.1080/10618600.2023.2257247.
+On arXiv: https://doi.org/10.48550/arXiv.2301.11732
 
 # Installing
 
