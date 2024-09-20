@@ -5,7 +5,7 @@ A possible use of the package is to use one-dimensional convolutional neural net
 (first introduced in Ghasempour et al, 2023).
 Tensorflow and Keras are used to implement the neural network models.
 
-Examples of use can be found at [Causal_CNN](https://github.com/stat4reg/Causal_CNN)
+Examples of use can be found at [Causal_CNN](https://github.com/stat4reg/Causal_CNN) or in the [Vignette](https://github.com/stat4reg/DNNcausal/blob/master/Vignette.pdf)
 
 
 # References
