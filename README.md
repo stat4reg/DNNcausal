@@ -1,3 +1,5 @@
+# dplyr <a href="https://github.com/stat4reg/DNNcausal/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+
 # DNNcausal 
 The R-package DNNcausal implements estimators of average causal effect and average causal effect on the treated,
 combining AIPW with deep neural networks fits of nuisance functions.
