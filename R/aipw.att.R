@@ -621,6 +621,8 @@ cat('training starts \n')
   if(debugging){
     res=c(res, 'p_hat'=as.data.frame(p_one))
     res=c(res, 'm0_hat'=as.data.frame(miu_hat_zero))
+    DR_score_ATT <- psi_11 - psi_01 - miu_hat_zero
+    res=c(res, 'DR_score_ATT'=as.data.frame(DR_score_ATT))
   }
   return(res)
 }

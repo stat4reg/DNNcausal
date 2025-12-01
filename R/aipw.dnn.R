@@ -494,6 +494,10 @@ aipw.dnn = function(Y,T,X_t,X = NULL,rescale_outcome=TRUE,model=NULL,optimizer=N
     res=c(res, 'p_hat'=as.data.frame(p_one))
     res=c(res, 'm0_hat'=as.data.frame(miu_hat_zero))
     res=c(res, 'm1_hat'=as.data.frame(miu_hat_one))
+    DR_score <- phi_hat_one - phi_hat_zero
+    DR_score_ATT <- psi_11 - psi_01 - miu_hat_zero
+    res=c(res, 'DR_score'=as.data.frame(DR_score))
+    res=c(res, 'DR_score_ATT'=as.data.frame(DR_score_ATT))
   }
 
   return(res)
